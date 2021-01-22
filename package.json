@@ -1,0 +1,15 @@
+{
+  "name": "vite-svelte",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:server": "vite build --ssr src/entry-server.ts --outDir dist/server"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "rollup-plugin-svelte": "^7.1.0",
+    "svelte": "^3.31.2",
+    "vite": "^2.0.0-beta.12"
+  }
+}
