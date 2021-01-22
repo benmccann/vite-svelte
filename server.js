@@ -47,10 +47,10 @@ async function startServer() {
 
   app.use('*', async (req, res, next) => {
     try {
-      const { render } = //isProd
-        //? // @ts-ignore
-          require('./dist/server/entry-server.js');
-//        : await vite.ssrLoadModule('/src/entry-server.ts')
+      const { render } = isProd
+        ? // @ts-ignore
+          require('./dist/server/entry-server.js')
+        : await vite.ssrLoadModule('/src/entry-server.ts')
 
       const [appHtml, preloadLinks] = await render(req.originalUrl, manifest)
 
