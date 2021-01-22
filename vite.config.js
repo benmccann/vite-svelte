@@ -10,5 +10,8 @@ export default {
         dev: !production,
       }
     })
-  ]
+  ],
+  optimizeDeps: {
+  	exclude: ['svelte']
+  }
 }
