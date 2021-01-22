@@ -18,17 +18,9 @@ function getIndexTemplate(url) {
     return indexProd
   }
 
-  // TODO handle plugin indexHtmlTransforms?
-  const reactPreamble = url.startsWith('/react')
-    ? `<script type="module">${
-        require('@vitejs/plugin-react-refresh').preambleCode
-      }</script>`
-    : ''
-
   // during dev, inject vite client + always read fresh index.html
   return (
     `<script type="module" src="/@vite/client"></script>` +
-    reactPreamble +
     fs.readFileSync('index.html', 'utf-8')
   )
 }
@@ -55,10 +47,10 @@ async function startServer() {
 
   app.use('*', async (req, res, next) => {
     try {
-      const { render } = isProd
-        ? // @ts-ignore
-          require('./dist/server/entry-server.js')
-        : await vite.ssrLoadModule('/src/entry-server.ts')
+      const { render } = //isProd
+        //? // @ts-ignore
+          require('./dist/server/entry-server.js');
+//        : await vite.ssrLoadModule('/src/entry-server.ts')
 
       const [appHtml, preloadLinks] = await render(req.originalUrl, manifest)
 
