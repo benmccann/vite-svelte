@@ -5,9 +5,7 @@ export async function render(
   manifest: Manifest
 ): Promise<[string, string]> {
 
-  const { head, html, css } = App.render({
+  return App.render({
     name: 'world'
-  })
-
-  return [html, ''];
+  });
 }

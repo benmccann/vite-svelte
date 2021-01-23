@@ -52,11 +52,11 @@ async function startServer() {
           require('./dist/server/entry-server.js')
         : await vite.ssrLoadModule('/src/entry-server.ts')
 
-      const [appHtml, preloadLinks] = await render(req.originalUrl, manifest)
+      const rendered = await render(req.originalUrl, manifest)
+      const head = `<style>${rendered.css.code}</style>`;
 
       const html = `
-      ${preloadLinks}
-      ${getIndexTemplate(req.originalUrl).replace(`<!--ssr-outlet-->`, appHtml)}
+      ${getIndexTemplate(req.originalUrl).replace(`<!--ssr-body-->`, rendered.html).replace(`<!--ssr-head-->`, head)}
       `
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
