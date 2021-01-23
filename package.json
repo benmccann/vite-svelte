@@ -10,7 +10,7 @@
   "devDependencies": {
     "compression": "^1.7.4",
     "express": "^4.17.1",
-    "vite-plugin-svelte": "^7.1.0",
+    "vite-plugin-svelte": "https://github.com/benmccann/vite-plugin-svelte",
     "serve-static": "^1.14.1",
     "svelte": "^3.31.2",
     "vite": "^2.0.0-beta.37"

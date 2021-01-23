@@ -1,6 +1,4 @@
-An example Svelte project on Vite
-
-Requires [vite-plugin-svelte](https://github.com/benmccann/vite-plugin-svelte)
+An example Svelte project on Vite using [vite-plugin-svelte](https://github.com/benmccann/vite-plugin-svelte)
 
 Run `npm run dev` for dev mode
 
