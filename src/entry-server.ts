@@ -6,7 +6,7 @@ export async function render(
 ): Promise<[string, string]> {
 
   const { head, html, css } = App.render({
-    answer: 42
+    name: 'world'
   })
 
   return [html, ''];
