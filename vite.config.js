@@ -7,7 +7,8 @@ export default {
     svelte({
       emitCss: false,
       compilerOptions: {
-        dev: !production
+        dev: !production,
+        hydratable: true
       }
     })
   ]
