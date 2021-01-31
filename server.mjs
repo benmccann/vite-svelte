@@ -31,6 +31,9 @@ function getIndexTemplate(url) {
 async function startServer() {
   const app = express()
 
+  /**
+   * @type {vite.ViteDevServer}
+   */
   let viteDevServer;
   if (!isProd) {
     viteDevServer = await vite.createServer({
