@@ -8,11 +8,13 @@
     "build:server": "vite build --ssr src/entry-server.ts --outDir dist/server"
   },
   "devDependencies": {
+    "@fortawesome/free-brands-svg-icons": "^5.15.2",
     "compression": "^1.7.4",
     "express": "^4.17.1",
-    "vite-plugin-svelte": "https://github.com/benmccann/vite-plugin-svelte",
     "serve-static": "^1.14.1",
     "svelte": "^3.31.2",
-    "vite": "^2.0.0-beta.60"
+    "svelte-awesome": "^2.3.0",
+    "vite": "^2.0.0-beta.60",
+    "vite-plugin-svelte": "https://github.com/benmccann/vite-plugin-svelte"
   }
 }
