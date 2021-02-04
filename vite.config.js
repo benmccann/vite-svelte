@@ -12,10 +12,7 @@ export default {
 			}
 		})
 	],
-	optimizeDeps: {
-		exclude: ['svelte-awesome']
-	},
 	ssr: {
-		external: ['svelte-awesome']
+		noExternal: ['svelte-awesome']
 	}
 }
