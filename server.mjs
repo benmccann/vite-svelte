@@ -3,7 +3,6 @@ import fs from 'fs';
 import express from 'express';
 import compression from 'compression';
 import serveStatic from 'serve-static';
-import vite from 'vite';
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -31,7 +30,7 @@ async function startServer() {
   const app = express()
 
   /**
-   * @type {vite.ViteDevServer}
+   * @type {import('vite').ViteDevServer}
    */
   let viteDevServer;
 
@@ -39,6 +38,7 @@ async function startServer() {
     app.use(compression())
     app.use(serveStatic('dist/client', { index: false }))
   } else {
+    const vite = await import('vite');
     viteDevServer = await vite.createServer({
       server: {
         middlewareMode: true
