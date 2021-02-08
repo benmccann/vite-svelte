@@ -1,8 +1,8 @@
 // @ts-check
 import fs from 'fs';
-import express from 'express';
+import sirv from 'sirv';
+import Polka from 'polka';
 import compression from 'compression';
-import serveStatic from 'serve-static';
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -27,7 +27,7 @@ function getIndexTemplate(url) {
 }
 
 async function startServer() {
-  const app = express()
+  const app = Polka()
 
   /**
    * @type {import('vite').ViteDevServer}
@@ -36,7 +36,10 @@ async function startServer() {
 
   if (isProd) {
     app.use(compression())
-    app.use(serveStatic('dist/client', { index: false }))
+    app.use(sirv('dist/client', {
+      extensions: [], // turns off `index.html`
+      etag: true,
+    }))
   } else {
     const vite = await import('vite');
     viteDevServer = await vite.createServer({
@@ -59,7 +62,8 @@ async function startServer() {
 
       const html = getIndexTemplate(req.originalUrl).replace(`<!--ssr-body-->`, rendered.html).replace(`<!--ssr-head-->`, head)
 
-      res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
+      res.setHeader('Content-Type', 'text/html')
+      res.end(html)
     } catch (e) {
       !isProd && viteDevServer.ssrFixStacktrace(e)
       console.log(e.stack)
