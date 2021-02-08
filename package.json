@@ -5,7 +5,8 @@
     "dev": "node server.mjs",
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --ssrManifest --outDir dist/client",
-    "build:server": "vite build --ssr src/entry-server.ts --outDir dist/server"
+    "build:server": "vite build --ssr src/entry-server.ts --outDir dist/server",
+    "start": "NODE_ENV=production node server.mjs"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^5.15.2",

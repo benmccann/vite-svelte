@@ -3,7 +3,6 @@ import fs from 'fs';
 import express from 'express';
 import compression from 'compression';
 import serveStatic from 'serve-static';
-import vite from 'vite';
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -12,8 +11,7 @@ const indexProd = isProd
   : ''
 
 const manifest = isProd
-  ? // @ts-ignore
-    await import('./dist/client/ssr-manifest.json')
+  ? JSON.parse(fs.readFileSync('dist/client/ssr-manifest.json', 'utf8'))
   : {}
 
 function getIndexTemplate(url) {
@@ -32,10 +30,15 @@ async function startServer() {
   const app = express()
 
   /**
-   * @type {vite.ViteDevServer}
+   * @type {import('vite').ViteDevServer}
    */
   let viteDevServer;
-  if (!isProd) {
+
+  if (isProd) {
+    app.use(compression())
+    app.use(serveStatic('dist/client', { index: false }))
+  } else {
+    const vite = await import('vite');
     viteDevServer = await vite.createServer({
       server: {
         middlewareMode: true
@@ -43,24 +46,18 @@ async function startServer() {
     })
     // use vite's connect instance as middleware
     app.use(viteDevServer.middlewares)
-  } else {
-    app.use(compression)
-    app.use(serveStatic('dist/client', { index: false }))
   }
 
   app.use('*', async (req, res, next) => {
     try {
       const { render } = isProd
-        ? // @ts-ignore
-          require('./dist/server/entry-server.js')
+        ? await import('./dist/server/entry-server.js')
         : await viteDevServer.ssrLoadModule('/src/entry-server.ts')
 
       const rendered = await render(req.originalUrl, manifest)
       const head = `<style>${rendered.css.code}</style>`;
 
-      const html = `
-      ${getIndexTemplate(req.originalUrl).replace(`<!--ssr-body-->`, rendered.html).replace(`<!--ssr-head-->`, head)}
-      `
+      const html = getIndexTemplate(req.originalUrl).replace(`<!--ssr-body-->`, rendered.html).replace(`<!--ssr-head-->`, head)
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
