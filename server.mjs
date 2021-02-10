@@ -3,6 +3,7 @@ import fs from 'fs';
 import sirv from 'sirv';
 import Polka from 'polka';
 import compression from 'compression';
+import vite from 'vite';
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -41,7 +42,6 @@ async function startServer() {
       etag: true,
     }))
   } else {
-    const vite = await import('vite');
     viteDevServer = await vite.createServer({
       server: {
         middlewareMode: true

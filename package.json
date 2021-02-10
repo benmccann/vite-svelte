@@ -15,7 +15,7 @@
     "sirv": "^1.0.11",
     "svelte": "^3.31.2",
     "svelte-awesome": "^2.3.0",
-    "vite": "^2.0.0-beta.65",
+    "vite": "^2.0.0-beta.67",
     "vite-plugin-svelte": "https://github.com/benmccann/vite-plugin-svelte"
   }
 }
